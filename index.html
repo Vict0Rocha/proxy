@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padrão Proxy - Gang of Four</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 3L4 14h7l-1 8 9-11h-7l1-8z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Padrão Proxy</h1>
+                        <span>Gang of Four (GoF)</span>
+                    </div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#conceito" class="nav-link">Conceito</a></li>
+                    <li><a href="#diagrama" class="nav-link">Diagrama</a></li>
+                    <li><a href="#tipos" class="nav-link">Tipos</a></li>
+                    <li><a href="#codigo" class="nav-link">Código</a></li>
+                    <li><a href="#aplicacoes" class="nav-link">Aplicações</a></li>
+                    <li><a href="#beneficios" class="nav-link">Benefícios</a></li>
+                </ul>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="badge">Padrão Estrutural</div>
+                    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+                        <svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" />
+                            <path
+                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <ul class="mobile-menu-links">
+            <li><a href="#home" class="mobile-nav-link">Início</a></li>
+            <li><a href="#conceito" class="mobile-nav-link">Conceito</a></li>
+            <li><a href="#diagrama" class="mobile-nav-link">Diagrama</a></li>
+            <li><a href="#tipos" class="mobile-nav-link">Tipos</a></li>
+            <li><a href="#codigo" class="mobile-nav-link">Código</a></li>
+            <li><a href="#aplicacoes" class="mobile-nav-link">Aplicações</a></li>
+            <li><a href="#beneficios" class="mobile-nav-link">Benefícios</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="section hero">
+        <div class="section-content">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Desvendando o Padrão <span class="gradient-text">Proxy</span>
+                </h1>
+                <p class="hero-description">
+                    Uma jornada interativa pelo mundo dos padrões de projeto estruturais. Aprenda como o Proxy atua como
+                    um substituto inteligente para controlar o acesso a objetos.
+                </p>
+                <div class="hero-badges">
+                    <div class="hero-badge hero-badge-green">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        Padrão Estrutural
+                    </div>
+                    <div class="hero-badge hero-badge-blue">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Gang of Four
+                    </div>
+                    <div class="hero-badge hero-badge-purple">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Exemplo Prático
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conceito Section -->
+    <section id="conceito" class="section">
+        <div class="section-content">
+            <div class="text-center mb-12">
+                <h2 class="section-title">O que é o Padrão Proxy?</h2>
+                <p class="hero-description">A essência do padrão em poucas palavras</p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+                <div>
+                    <div
+                        style="background: var(--bg-card); padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-card); border: 1px solid var(--border-secondary); transition: all 0.3s ease;">
+                        <p style="font-size: 1.25rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                            O <strong>Proxy</strong> é um padrão de projeto estrutural que tem a intenção de fornecer um
+                            objeto <strong>substituto</strong> que atua como se fosse o objeto real que o código cliente
+                            gostaria de usar.
+                        </p>
+                        <p style="font-size: 1.25rem; line-height: 1.6;">
+                            O proxy recebe as solicitações e tem controle sobre como e quando repassar tais solicitações
+                            ao objeto real. Pense nele como um <strong>porteiro</strong> ou um
+                            <strong>intermediário</strong>.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1.5rem;">
+                        <div style="text-align: center;">
+                            <div
+                                style="background: linear-gradient(135deg, #4338ca, #6366f1); color: white; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);">
+                                Cliente
+                            </div>
+                            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Solicita a
+                                ação</p>
+                        </div>
+                        <div style="font-size: 2rem; color: var(--accent-blue);">→</div>
+                        <div style="text-align: center;">
+                            <div
+                                style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);">
+                                Proxy
+                            </div>
+                            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Intercepta
+                                e controla</p>
+                        </div>
+                        <div style="font-size: 2rem; color: var(--text-muted);">→</div>
+                        <div style="text-align: center;">
+                            <div
+                                style="background: linear-gradient(135deg, #374151, #4b5563); color: white; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; box-shadow: 0 4px 12px rgba(55, 65, 81, 0.3);">
+                                Real
+                            </div>
+                            <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Executa a
+                                ação</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagrama Section -->
+    <section id="diagrama" class="section diagram-section">
+        <div class="section-content">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Estrutura do Padrão (UML)</h2>
+                <p class="hero-description">Uma visão geral da relação entre as classes</p>
+            </div>
+            <div class="diagram-container">
+                <svg class="diagram-svg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Definições de Marcadores (Setas) -->
+                    <defs>
+                        <!-- Seta de Associação (cheia) -->
+                        <marker id="arrow-assoc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6"
+                            orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-secondary)"></path>
+                        </marker>
+                        <!-- Seta de Implementação (vazada) -->
+                        <marker id="arrow-impl" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="8" markerHeight="8"
+                            orient="auto-start-reverse">
+                            <path d="M 10 0 L 0 5 L 10 10 z" fill="var(--bg-card)" stroke="var(--text-secondary)"
+                                stroke-width="1"></path>
+                        </marker>
+                    </defs>
+
+                    <!-- Client -->
+                    <g transform="translate(50, 250)">
+                        <rect width="140" height="60" rx="8" fill="var(--accent-blue)" stroke="var(--accent-blue)"
+                            stroke-width="2" />
+                        <text x="70" y="35" text-anchor="middle" fill="white" font-weight="bold"
+                            font-size="14">Client</text>
+                    </g>
+
+                    <!-- Subject Interface -->
+                    <g transform="translate(300, 100)">
+                        <rect width="180" height="90" rx="8" fill="var(--accent-green)" stroke="var(--accent-green)"
+                            stroke-width="2" />
+                        <text x="90" y="25" text-anchor="middle" font-style="italic" fill="white"
+                            font-size="12">&lt;&lt;interface&gt;&gt;</text>
+                        <text x="90" y="50" text-anchor="middle" font-weight="bold" fill="white"
+                            font-size="16">Subject</text>
+                        <line x1="10" y1="65" x2="170" y2="65" stroke="white"></line>
+                        <text x="20" y="80" text-anchor="start" fill="white" font-size="12"
+                            font-family="monospace">request()</text>
+                    </g>
+
+                    <!-- RealSubject -->
+                    <g transform="translate(200, 400)">
+                        <rect width="180" height="90" rx="8" fill="var(--bg-card)" stroke="var(--border-primary)"
+                            stroke-width="2" />
+                        <text x="90" y="30" text-anchor="middle" font-weight="bold" fill="var(--text-primary)"
+                            font-size="16">RealSubject</text>
+                        <line x1="10" y1="45" x2="170" y2="45" stroke="var(--border-primary)"></line>
+                        <text x="20" y="65" text-anchor="start" fill="var(--text-primary)" font-size="12"
+                            font-family="monospace">request()</text>
+                    </g>
+
+                    <!-- Proxy -->
+                    <g transform="translate(500, 400)">
+                        <rect width="180" height="100" rx="8" fill="var(--bg-card)" stroke="var(--border-primary)"
+                            stroke-width="2" />
+                        <text x="90" y="30" text-anchor="middle" font-weight="bold" fill="var(--text-primary)"
+                            font-size="16">Proxy</text>
+                        <line x1="10" y1="45" x2="170" y2="45" stroke="var(--border-primary)"></line>
+                        <text x="20" y="65" text-anchor="start" fill="var(--text-primary)" font-size="12"
+                            font-family="monospace">- realSubject: RealSubject</text>
+                        <text x="20" y="85" text-anchor="start" fill="var(--text-primary)" font-size="12"
+                            font-family="monospace">request()</text>
+                    </g>
+
+                    <!-- Linhas de Relação -->
+                    <!-- Client -> Subject -->
+                    <path d="M 190 280 C 250 280, 280 190, 300 170" stroke="var(--text-secondary)" stroke-width="2"
+                        fill="none" marker-end="url(#arrow-assoc)" />
+
+                    <!-- Proxy -> RealSubject -->
+                    <path d="M 500 445 L 380 445" stroke="var(--text-secondary)" stroke-width="2" fill="none"
+                        marker-end="url(#arrow-assoc)" />
+                    <text x="440" y="435" text-anchor="middle" fill="var(--text-secondary)" font-size="12">refere-se
+                        a</text>
+
+                    <!-- Implementações -->
+                    <!-- Linha principal da herança -->
+                    <path d="M 390 190 L 390 350" stroke="var(--text-secondary)" stroke-dasharray="8 4" stroke-width="2"
+                        fill="none" />
+                    <!-- RealSubject --|> Subject -->
+                    <path d="M 290 400 L 290 350 L 390 350" stroke="var(--text-secondary)" stroke-dasharray="8 4"
+                        stroke-width="2" fill="none" />
+                    <!-- Proxy --|> Subject -->
+                    <path d="M 590 400 L 590 350 L 390 350" stroke="var(--text-secondary)" stroke-dasharray="8 4"
+                        stroke-width="2" fill="none" marker-start="url(#arrow-impl)" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tipos Section -->
+    <section id="tipos" class="section types-section">
+        <div class="section-content">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Tipos de Proxy</h2>
+                <p class="hero-description">Diferentes proxies para diferentes necessidades</p>
+            </div>
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-icon type-icon-virtual">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                            <path d="M12 1v6m0 6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M21 12h-6m-6 0H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h4>Proxy Virtual</h4>
+                    <p>Controla acesso a recursos caros para criação, adiando sua instanciação para quando for realmente
+                        necessário.</p>
+                    <div class="type-example">Lazy Loading</div>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon type-icon-remote">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.93 4.93l14.14 14.14" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <path d="M6.5 6.5a10 10 0 1 0 11 11" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <path d="M13 13a5 5 0 0 0-5-5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h4>Proxy Remoto</h4>
+                    <p>Fornece uma representação local para um objeto que está em um espaço de endereço diferente
+                        (servidor remoto).</p>
+                    <div class="type-example">APIs Remotas</div>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon type-icon-protection">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h4>Proxy de Proteção</h4>
+                    <p>Controla o acesso, verificando se o solicitante tem as permissões necessárias para executar uma
+                        requisição.</p>
+                    <div class="type-example">Controle de Acesso</div>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon type-icon-smart">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h4>Proxy Inteligente</h4>
+                    <p>Adiciona funcionalidades extras como cache, logging, contagem de referências ou verificação de
+                        integridade.</p>
+                    <div class="type-example">Cache & Logging</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Código Section -->
+    <section id="codigo" class="section code-section">
+        <div class="section-content">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Exemplo Prático em Python</h2>
+                <p class="hero-description">Veja o padrão Proxy em ação com cache inteligente</p>
+            </div>
+            <div class="code-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="codigo-tab">📝 Código Python</button>
+                    <button class="tab-button" data-tab="execucao-tab">▶️ Execução</button>
+                </div>
+
+                <div id="codigo-tab" class="tab-panel active">
+                    <div class="code-card">
+                        <div class="code-header">
+                            <div class="code-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Implementação do Padrão Proxy
+                            </div>
+                            <p class="code-description">Proxy Virtual com cache para otimizar operações custosas</p>
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations
+<span class="keyword">from</span> abc <span class="keyword">import</span> ABC, abstractmethod
+<span class="keyword">from</span> time <span class="keyword">import</span> sleep
+<span class="keyword">from</span> typing <span class="keyword">import</span> List, Dict
+
+
+<span class="keyword">class</span> <span class="class">IUsuario</span>(ABC):
+    <span class="string">""" Subject Interface """</span>
+
+    <span class="decorator">@abstractmethod</span>
+    <span class="keyword">def</span> <span class="function">pega_endereco</span>(<span class="builtin">self</span>) -> List[Dict]: <span class="keyword">pass</span>
+
+    <span class="decorator">@abstractmethod</span>
+    <span class="keyword">def</span> <span class="function">pega_dados_usuarios</span>(<span class="builtin">self</span>) -> Dict: <span class="keyword">pass</span>
+
+<span class="keyword">class</span> <span class="class">UsuarioReal</span>(IUsuario):
+    <span class="string">""" Real Subject """</span>
+
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="builtin">self</span>, primeiro_nome: <span class="builtin">str</span>, segundo_nome: <span class="builtin">str</span>) -> <span class="keyword">None</span>:
+        <span class="function">sleep</span>(<span class="number">2</span>) <span class="comment"># Simulando uma requisição</span>
+        <span class="builtin">self</span>.primeiro_nome = primeiro_nome
+        <span class="builtin">self</span>.segundo_nome = segundo_nome
+
+    <span class="keyword">def</span> <span class="function">pega_endereco</span>(<span class="builtin">self</span>) -> List[Dict]: 
+        <span class="function">sleep</span>(<span class="number">2</span>) <span class="comment"># Simulando uma requisição</span>
+        <span class="keyword">return</span> [
+            {<span class="string">'avenida'</span>: <span class="string">'brasil'</span>, <span class="string">'numero'</span>: <span class="string">'01010'</span>}
+        ]
+
+    <span class="keyword">def</span> <span class="function">pega_dados_usuarios</span>(<span class="builtin">self</span>) -> Dict: 
+        <span class="function">sleep</span>(<span class="number">2</span>) <span class="comment"># Simulando uma requisição</span>
+        <span class="keyword">return</span> {
+            <span class="string">'cpf'</span>: <span class="string">'111.111.111-11'</span>,
+            <span class="string">'rg'</span>: <span class="string">'AB123456'</span>
+        }
+    
+<span class="keyword">class</span> <span class="class">Proxy</span>(IUsuario):
+    <span class="string">""" Proxy """</span>
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="builtin">self</span>, primeiro_nome: <span class="builtin">str</span>, segundo_nome: <span class="builtin">str</span>) -> <span class="keyword">None</span>:
+        <span class="builtin">self</span>.primeiro_nome = primeiro_nome
+        <span class="builtin">self</span>.segundo_nome = segundo_nome
+
+        <span class="comment"># Esses objetos nesse ponto do código ainda não existem</span>
+        <span class="builtin">self</span>._usuario_real: UsuarioReal
+        <span class="builtin">self</span>._cache_endereco: List[Dict]
+        <span class="builtin">self</span>._dados_usuarios: Dict
+
+    <span class="keyword">def</span> <span class="function">pega_usuario_real</span>(<span class="builtin">self</span>) -> <span class="keyword">None</span>:
+        <span class="keyword">if</span> <span class="keyword">not</span> <span class="function">hasattr</span>(<span class="builtin">self</span>, <span class="string">'_usuario_real'</span>):
+            <span class="builtin">self</span>._usuario_real = <span class="class">UsuarioReal</span>(<span class="builtin">self</span>.primeiro_nome, <span class="builtin">self</span>.segundo_nome)
+
+    <span class="keyword">def</span> <span class="function">pega_endereco</span>(<span class="builtin">self</span>) -> List[Dict]: 
+        <span class="builtin">self</span>.<span class="function">pega_usuario_real</span>()
+
+        <span class="keyword">if</span> <span class="keyword">not</span> <span class="function">hasattr</span>(<span class="builtin">self</span>, <span class="string">'_cache_endereco'</span>):    
+            <span class="builtin">self</span>._cache_endereco = <span class="builtin">self</span>._usuario_real.<span class="function">pega_endereco</span>()
+        
+        <span class="keyword">return</span> <span class="builtin">self</span>._cache_endereco
+        
+    <span class="keyword">def</span> <span class="function">pega_dados_usuarios</span>(<span class="builtin">self</span>) -> Dict: 
+        <span class="builtin">self</span>.<span class="function">pega_usuario_real</span>()
+
+        <span class="keyword">if</span> <span class="keyword">not</span> <span class="function">hasattr</span>(<span class="builtin">self</span>, <span class="string">'_dados_usuarios'</span>):    
+            <span class="builtin">self</span>._dados_usuarios = <span class="builtin">self</span>._usuario_real.<span class="function">pega_dados_usuarios</span>()
+        
+        <span class="keyword">return</span> <span class="builtin">self</span>._dados_usuarios
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    usuario1 = <span class="class">Proxy</span>(<span class="string">'Victor'</span>, <span class="string">'Hugo'</span>)
+
+    <span class="comment"># Responde instantaneamente</span>
+    <span class="function">print</span>(usuario1.primeiro_nome)
+    <span class="function">print</span>(usuario1.segundo_nome)
+
+    <span class="comment"># 6 segundos para obter resposta</span>
+    <span class="function">print</span>(usuario1.<span class="function">pega_dados_usuarios</span>())
+    <span class="function">print</span>(usuario1.<span class="function">pega_endereco</span>())
+
+    <span class="comment"># Aqui é respondido instantaneamente</span>
+    <span class="function">print</span>(<span class="string">'DADOS EM CACHE'</span>)
+    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="number">5</span>):
+        <span class="function">print</span>(usuario1.<span class="function">pega_endereco</span>())
+        <span class="function">print</span>(usuario1.<span class="function">pega_dados_usuarios</span>())</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="execucao-tab" class="tab-panel">
+                    <div class="execution-card">
+                        <div class="execution-header">
+                            <div class="execution-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="5 3 19 12 5 21 5 3" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Simulação de Execução
+                            </div>
+                            <p class="execution-description">Veja como o cache do proxy otimiza as operações</p>
+                        </div>
+                        <div class="execution-content">
+                            <button class="run-button" onclick="simulateExecution()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 5v14l11-7z" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Executar Código
+                            </button>
+                            <div id="terminal" class="terminal">
+                                <div class="terminal-prompt">Clique em "Executar Código" para ver a simulação...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aplicações Section -->
+    <section id="aplicacoes" class="section applications-section">
+        <div class="section-content">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Aplicações do Padrão Proxy</h2>
+                <p class="hero-description">Onde encontramos o Proxy no mundo real</p>
+            </div>
+            <div class="applications-grid">
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Lazy Loading de imagens em páginas web</span>
+                </div>
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Cache de resultados de consultas de banco de dados</span>
+                </div>
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Controle de acesso em sistemas de segurança</span>
+                </div>
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Proxies de rede para otimização de tráfego</span>
+                </div>
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Virtual Proxies em jogos para objetos 3D</span>
+                </div>
+                <div class="application-card">
+                    <div class="application-dot"></div>
+                    <span>Logging e monitoramento de operações</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Section -->
+    <section id="beneficios" class="section benefits-section">
+        <div class="section-content">
+            <div class="benefits-content">
+                <h2 class="section-title">Por que usar o Padrão Proxy?</h2>
+                <p class="benefits-description">
+                    O Proxy oferece controle adicional sobre como e quando acessar um objeto, permitindo otimizações e
+                    funcionalidades extras sem modificar o código cliente.
+                </p>
+                <div class="benefits-cards">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h4>Performance</h4>
+                        <p>Otimiza operações custosas com cache e lazy loading</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h4>Segurança</h4>
+                        <p>Controla acesso e valida permissões antes da execução</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 9V5a3 3 0 0 0-6 0v4" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <rect x="2" y="9" width="20" height="12" rx="2" ry="2" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h4>Transparência</h4>
+                        <p>Cliente não precisa saber se está usando proxy ou objeto real</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h4>Flexibilidade</h4>
+                        <p>Adiciona funcionalidades sem modificar o código existente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <strong>Padrão Proxy - Gang of Four (GoF)</strong><br>
+                Uma apresentação educativa sobre padrões de projeto.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
