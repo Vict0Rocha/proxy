@@ -2,14 +2,14 @@
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
+
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
+
     // Toggle icon visibility
     const lightIcon = document.querySelector('.theme-icon-light');
     const darkIcon = document.querySelector('.theme-icon-dark');
-    
+
     if (newTheme === 'dark') {
         lightIcon.style.display = 'none';
         darkIcon.style.display = 'block';
@@ -23,7 +23,7 @@ function toggleTheme() {
 function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
     mobileMenu.classList.toggle('active');
-    
+
     // Prevent body scroll when menu is open
     if (mobileMenu.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
@@ -36,18 +36,18 @@ function toggleMobileMenu() {
 function updateActiveNavLink() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
     let currentSection = '';
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop - 100;
         const sectionHeight = section.offsetHeight;
-        
+
         if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
             currentSection = section.getAttribute('id');
         }
     });
-    
+
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${currentSection}`) {
@@ -59,15 +59,15 @@ function updateActiveNavLink() {
 // Removed animation functions for cleaner experience
 
 // Initialize theme on page load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check for saved theme preference or default to 'light'
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
+
     // Set initial icon state
     const lightIcon = document.querySelector('.theme-icon-light');
     const darkIcon = document.querySelector('.theme-icon-dark');
-    
+
     if (savedTheme === 'dark') {
         lightIcon.style.display = 'none';
         darkIcon.style.display = 'block';
@@ -75,17 +75,17 @@ document.addEventListener('DOMContentLoaded', function() {
         lightIcon.style.display = 'block';
         darkIcon.style.display = 'none';
     }
-    
+
     // Removed animation initializations
-    
+
     // Navigation functionality
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
+
             if (targetSection) {
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
@@ -94,19 +94,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Mobile navigation functionality
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
     mobileNavLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
-            
+
             if (targetSection) {
                 // Close mobile menu
                 toggleMobileMenu();
-                
+
                 // Scroll to section after a small delay to allow menu to close
                 setTimeout(() => {
                     targetSection.scrollIntoView({
@@ -117,11 +117,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Update active nav link on scroll
     window.addEventListener('scroll', updateActiveNavLink);
     updateActiveNavLink(); // Initial call
-    
+
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
@@ -129,11 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const targetTab = button.getAttribute('data-tab');
-            
+
             // Remove active class from all buttons and panels
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabPanels.forEach(panel => panel.classList.remove('active'));
-            
+
             // Add active class to clicked button and corresponding panel
             button.classList.add('active');
             document.getElementById(targetTab).classList.add('active');
@@ -146,11 +146,11 @@ let isRunning = false;
 
 function simulateExecution() {
     if (isRunning) return;
-    
+
     isRunning = true;
     const terminal = document.getElementById('terminal');
     const runButton = document.querySelector('.run-button');
-    
+
     // Update button state
     runButton.disabled = true;
     runButton.innerHTML = `
@@ -160,34 +160,34 @@ function simulateExecution() {
         </svg>
         Executando...
     `;
-    
+
     // Clear terminal
     terminal.innerHTML = '';
-    
+
     const steps = [
-        { time: 0, message: "Criando Proxy('Victor', 'Hugo')...", type: 'info' },
-        { time: 500, message: "✓ Proxy criado instantaneamente!", type: 'success' },
-        { time: 1000, message: "Acessando primeiro_nome: Victor", type: 'output' },
-        { time: 1500, message: "Acessando segundo_nome: Hugo", type: 'output' },
-        { time: 2000, message: "Primeira chamada pega_dados_usuarios()...", type: 'info' },
-        { time: 2500, message: "⏳ Criando UsuarioReal (2s)...", type: 'loading' },
-        { time: 4500, message: "⏳ Buscando dados do usuário (2s)...", type: 'loading' },
-        { time: 6500, message: "✓ Dados: {'cpf': '111.111.111-11', 'rg': 'AB123456'}", type: 'success' },
-        { time: 7000, message: "Primeira chamada pega_endereco()...", type: 'info' },
-        { time: 7500, message: "⏳ Buscando endereços (2s)...", type: 'loading' },
-        { time: 9500, message: "✓ Endereços: [{'avenida': 'brasil', 'numero': '01010'}]", type: 'success' },
-        { time: 10000, message: "--- CACHE ATIVO ---", type: 'cache' },
-        { time: 10500, message: "Segunda chamada pega_endereco()...", type: 'info' },
-        { time: 11000, message: "⚡ Resposta instantânea do cache!", type: 'cache' },
-        { time: 11500, message: "Terceira chamada pega_dados_usuarios()...", type: 'info' },
-        { time: 12000, message: "⚡ Resposta instantânea do cache!", type: 'cache' },
-        { time: 12500, message: "✅ Execução completa!", type: 'complete' }
+        // { time: 0, message: "Criando Proxy('Victor', 'Hugo')...", type: 'info' },
+        { time: 0, message: "✓ Proxy criado instantaneamente!", type: 'success' },
+        // { time: 1000, message: "Acessando primeiro_nome: Victor", type: 'output' },
+        // { time: 1500, message: "Acessando segundo_nome: Hugo", type: 'output' },
+        { time: 0, message: "Primeira chamada pega_dados_usuarios()...", type: 'info' },
+        { time: 4000, message: "⏳ Criando UsuarioReal (4s)...", type: 'loading' },
+        { time: 6000, message: "⏳ Buscando dados do usuário (4s)...", type: 'loading' },
+        { time: 6100, message: "✓ Dados: {'cpf': '111.111.111-11', 'rg': 'AB123456'}", type: 'success' },
+        { time: 62000, message: "Primeira chamada pega_endereco()...", type: 'info' },
+        { time: 8500, message: "⏳ Buscando endereços (2s)...", type: 'loading' },
+        { time: 8600, message: "✓ Endereços: [{'avenida': 'brasil', 'numero': '01010'}]", type: 'success' },
+        { time: 8900, message: "--- CACHE ATIVO ---", type: 'cache' },
+        { time: 9000, message: "Segunda chamada pega_endereco()...", type: 'info' },
+        { time: 9050, message: "⚡ Resposta instantânea do cache!", type: 'cache' },
+        { time: 9100, message: "Terceira chamada pega_dados_usuarios()...", type: 'info' },
+        { time: 9150, message: "⚡ Resposta instantânea do cache!", type: 'cache' },
+        { time: 9200, message: "✅ Execução completa!", type: 'complete' }
     ];
 
     steps.forEach(step => {
         setTimeout(() => {
             addTerminalLine(step.message, step.type);
-            
+
             if (step === steps[steps.length - 1]) {
                 // Reset button state
                 setTimeout(() => {
@@ -209,7 +209,7 @@ function addTerminalLine(message, type = 'default') {
     const terminal = document.getElementById('terminal');
     const line = document.createElement('div');
     line.className = 'terminal-line';
-    
+
     // Add color coding based on type
     let color = '#e5e7eb'; // default
     let icon = '';
@@ -238,10 +238,10 @@ function addTerminalLine(message, type = 'default') {
             color = '#e5e7eb';
             break;
     }
-    
+
     line.style.color = color;
     line.textContent = icon + message;
-    
+
     terminal.appendChild(line);
     terminal.scrollTop = terminal.scrollHeight;
 }
